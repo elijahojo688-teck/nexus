@@ -13,6 +13,26 @@ const suggestions = [
   "Create a flyer",
 ];
 
+const searchCategories = [
+  {
+    keywords: ["buy", "keyboard", "laptop", "phone", "product", "sell"],
+    category: "PRODUCTS",
+    title: "Find what you need",
+    text: "Explore products available from people and businesses.",
+  },
+  {
+    keywords: ["designer", "photographer", "developer", "drummer", "logo"],
+    category: "PEOPLE & SERVICES",
+    title: "Find the right person",
+    text: "Discover people and services that can help with your request.",
+  },
+  {
+    keywords: ["job", "opportunity", "project", "collaboration"],
+    category: "OPPORTUNITIES",
+    title: "Discover possibilities",
+    text: "Find jobs, projects and collaborations that match your request.",
+  },
+];
 const areas = [
   {
     icon: "⌕",
