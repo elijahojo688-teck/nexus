@@ -106,6 +106,7 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [suggestion, setSuggestion] = useState(0);
   const [searchMessage, setSearchMessage] = useState("");
+  const [searchCategory, setSearchCategory] = useState("DISCOVER");
 
   const nextSuggestion = () => {
     setSuggestion((current) => (current + 1) % suggestions.length);
