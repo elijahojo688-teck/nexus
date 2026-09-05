@@ -1,4 +1,4 @@
-"use client";
+but"use client";
 
 import { useState } from "react";
 
@@ -114,6 +114,13 @@ export default function Home() {
 
   const runSearch = () => {
     const query = search.trim();
+    const match = searchCategories.find((item) =>
+  item.keywords.some((keyword) =>
+    query.toLowerCase().includes(keyword)
+  )
+);
+
+setSearchCategory(match?.category ?? "DISCOVER");
 
     if (!query) {
       setSearchMessage("Tell NEXUS what you're trying to find.");
