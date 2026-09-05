@@ -1,176 +1,248 @@
+"use client";
+
+import { useState } from "react";
+
+const suggestions = [
+  "Find a keyboard",
+  "Create a business logo",
+  "Find a photographer",
+  "Build a website",
+  "Find someone to work with",
+  "Sell my old laptop",
+  "Find an opportunity",
+  "Create a flyer",
+];
+
+const areas = [
+  {
+    icon: "⌕",
+    title: "Explore",
+    text: "Discover people, products, services and opportunities around the world.",
+  },
+  {
+    icon: "◉",
+    title: "People",
+    text: "Find creators, professionals, talent and people with useful skills.",
+  },
+  {
+    icon: "◇",
+    title: "Marketplace",
+    text: "Discover products and services from people and businesses.",
+  },
+  {
+    icon: "↗",
+    title: "Opportunities",
+    text: "Find jobs, projects, collaborations and new possibilities.",
+  },
+];
+
 export default function Home() {
+  const [search, setSearch] = useState("");
+  const [suggestion, setSuggestion] = useState(0);
+
+  const nextSuggestion = () => {
+    setSuggestion((current) => (current + 1) % suggestions.length);
+  };
+
   return (
-    <main className="min-h-screen bg-[#050816] text-white">
-      <div className="mx-auto max-w-7xl px-5 py-6 md:px-8">
-        {/* Header */}
-        <header className="flex items-center justify-between border-b border-white/10 pb-5">
+    <main className="nexus-page">
+      <div className="background-grid" />
+      <div className="background-orb orb-one" />
+      <div className="background-orb orb-two" />
+
+      <header className="nexus-header">
+        <div className="brand">
+          <div className="brand-symbol">
+            <span>N</span>
+          </div>
+
           <div>
-            <h1 className="text-2xl font-bold tracking-[0.25em] text-blue-400">
-              NEXUS
-            </h1>
-            <p className="text-xs text-slate-500">
-              Your world, connected.
-            </p>
+            <div className="brand-name">NEXUS</div>
+            <div className="brand-tagline">Connect. Create. Achieve.</div>
           </div>
+        </div>
 
-          <button className="rounded-full border border-white/15 px-4 py-2 text-sm">
-            Sign in
+        <nav className="desktop-nav">
+          <a href="#home">Home</a>
+          <a href="#explore">Explore</a>
+          <a href="#opportunities">Opportunities</a>
+          <a href="#marketplace">Market</a>
+        </nav>
+
+        <button className="signin-button">Sign in</button>
+      </header>
+
+      <section className="hero" id="home">
+        <div className="hero-badge">
+          <span className="status-dot" />
+          NEXUS GLOBAL NETWORK
+        </div>
+
+        <h1>
+          What are you
+          <span>trying to do?</span>
+        </h1>
+
+        <p className="hero-text">
+          Find people, products, services, opportunities, businesses,
+          creators and more — all in one place.
+        </p>
+
+        <div className="search-container">
+          <div className="search-symbol">⌕</div>
+
+          <input
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder={suggestions[suggestion]}
+            aria-label="Search NEXUS"
+          />
+
+          <button className="search-button">
+            Search
           </button>
-        </header>
+        </div>
 
-        {/* Hero */}
-        <section className="py-16 text-center md:py-24">
-          <p className="mb-4 text-sm uppercase tracking-[0.3em] text-blue-300">
-            Connect • Discover • Create
-          </p>
+        <div className="try-row">
+          <span>Try:</span>
+          <button onClick={nextSuggestion}>
+            {suggestions[suggestion]}
+          </button>
+        </div>
 
-          <h2 className="mx-auto max-w-4xl text-5xl font-bold leading-tight md:text-7xl">
-            Find what you need.
-            <span className="block text-blue-400">
-              Discover what’s next.
-            </span>
-          </h2>
+        <div className="quick-actions">
+          <button>
+            <span>＋</span>
+            Create
+          </button>
 
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-slate-300 md:text-lg">
-            NEXUS connects people, businesses, services, opportunities,
-            products, creators and communities in one global platform.
-          </p>
+          <button>
+            <span>⌕</span>
+            Find
+          </button>
 
-          {/* Search */}
-          <div className="mx-auto mt-10 flex max-w-3xl flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-2 sm:flex-row">
-            <input
-              type="text"
-              placeholder="What are you looking for?"
-              className="min-w-0 flex-1 rounded-xl bg-transparent px-4 py-4 text-white outline-none placeholder:text-slate-500"
-            />
-
-            <button className="rounded-xl bg-blue-500 px-7 py-4 font-semibold hover:bg-blue-400">
-              Search
-            </button>
-          </div>
-
-          <div className="mt-5 flex flex-wrap justify-center gap-2">
-            {[
-              "Buy something",
-              "Find a service",
-              "Find talent",
-              "Find opportunities",
-            ].map((item) => (
-              <button
-                key={item}
-                className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300 hover:bg-white/10"
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-        </section>
-
-        {/* Discover */}
-        <section className="border-t border-white/10 py-12">
-          <div className="mb-6">
-            <p className="text-sm font-semibold uppercase tracking-widest text-blue-400">
-              Explore NEXUS
-            </p>
-            <h3 className="mt-2 text-3xl font-bold">
-              One place. Many possibilities.
-            </h3>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              ["Explore", "Discover useful things, people and opportunities."],
-              ["People", "Find talent, creators and people with useful skills."],
-              ["Services", "Discover people and businesses offering services."],
-              ["Opportunities", "Find jobs, projects and collaborations."],
-            ].map(([title, text]) => (
-              <div
-                key={title}
-                className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition hover:bg-white/[0.07]"
-              >
-                <h4 className="text-xl font-semibold">{title}</h4>
-                <p className="mt-3 text-sm leading-6 text-slate-400">
-                  {text}
-                </p>
-                <button className="mt-5 text-sm font-semibold text-blue-400">
-                  Explore →
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Marketplace */}
-        <section className="py-12">
-          <div className="mb-6 flex items-end justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-widest text-blue-400">
-                Marketplace
-              </p>
-              <h3 className="mt-2 text-3xl font-bold">
-                Find products and services
-              </h3>
-            </div>
-
-            <button className="hidden text-sm text-slate-400 sm:block">
-              View all →
-            </button>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              ["Products", "Discover products from people and businesses."],
-              ["Digital products", "Find useful digital products and resources."],
-              ["Business", "Discover businesses and what they offer."],
-            ].map(([title, text]) => (
-              <div
-                key={title}
-                className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-7"
-              >
-                <div className="mb-8 h-12 w-12 rounded-xl border border-blue-400/30 bg-blue-400/10" />
-
-                <h4 className="text-xl font-semibold">{title}</h4>
-
-                <p className="mt-3 text-sm leading-6 text-slate-400">
-                  {text}
-                </p>
-
-                <button className="mt-6 rounded-lg border border-white/10 px-4 py-2 text-sm hover:bg-white/10">
-                  Discover
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* VERA */}
-        <section className="my-8 rounded-3xl border border-blue-400/20 bg-blue-400/[0.06] p-7 md:p-10">
-          <p className="text-sm uppercase tracking-widest text-blue-300">
-            Meet VERA
-          </p>
-
-          <h3 className="mt-3 text-3xl font-bold">
-            Your guide inside NEXUS.
-          </h3>
-
-          <p className="mt-4 max-w-2xl leading-7 text-slate-300">
-            VERA helps you discover people, services, products and
-            opportunities based on what you're looking for.
-          </p>
-
-          <button className="mt-7 rounded-xl bg-blue-500 px-6 py-3 font-semibold hover:bg-blue-400">
+          <button>
+            <span>✦</span>
             Ask VERA
           </button>
-        </section>
 
-        {/* Footer */}
-        <footer className="mt-12 border-t border-white/10 py-8 text-center text-sm text-slate-500">
-          <p>NEXUS — Your world, connected.</p>
-          <p className="mt-2">
-            Connect • Discover • Create
+          <button>
+            <span>↗</span>
+            Explore
+          </button>
+        </div>
+      </section>
+
+      <section className="section" id="explore">
+        <div className="section-heading">
+          <div>
+            <div className="section-label">DISCOVER</div>
+            <h2>One place. Many possibilities.</h2>
+          </div>
+
+          <button className="view-button">Explore all →</button>
+        </div>
+
+        <div className="area-grid">
+          {areas.map((area) => (
+            <article className="area-card" key={area.title}>
+              <div className="area-icon">{area.icon}</div>
+              <h3>{area.title}</h3>
+              <p>{area.text}</p>
+              <button>Discover →</button>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="vera-section">
+        <div className="vera-glow" />
+
+        <div className="vera-symbol">
+          <span>V</span>
+        </div>
+
+        <div className="vera-content">
+          <div className="section-label">VERA</div>
+
+          <h2>Your intelligent guide inside NEXUS.</h2>
+
+          <p>
+            Tell VERA what you're trying to accomplish and get help finding
+            the right people, products, services, opportunities and tools.
           </p>
-        </footer>
-      </div>
+
+          <button className="primary-button">
+            Ask VERA
+            <span>→</span>
+          </button>
+        </div>
+      </section>
+
+      <section className="section" id="marketplace">
+        <div className="section-heading">
+          <div>
+            <div className="section-label">NEXUS MARKET</div>
+            <h2>Discover what the world has to offer.</h2>
+          </div>
+        </div>
+
+        <div className="market-grid">
+          <article className="market-card large">
+            <div className="market-number">01</div>
+            <h3>Products</h3>
+            <p>
+              Find physical and digital products from people and businesses.
+            </p>
+            <button>Explore products →</button>
+          </article>
+
+          <article className="market-card">
+            <div className="market-number">02</div>
+            <h3>Services</h3>
+            <p>
+              Find people and businesses ready to help.
+            </p>
+            <button>Find services →</button>
+          </article>
+
+          <article className="market-card">
+            <div className="market-number">03</div>
+            <h3>Businesses</h3>
+            <p>
+              Discover businesses, brands and organizations.
+            </p>
+            <button>Discover businesses →</button>
+          </article>
+        </div>
+      </section>
+
+      <section className="continue-section" id="opportunities">
+        <div>
+          <div className="section-label">KEEP MOVING</div>
+          <h2>Your next opportunity could be here.</h2>
+          <p>
+            Discover projects, collaborations, jobs and possibilities that
+            match what you're looking for.
+          </p>
+        </div>
+
+        <button className="primary-button">
+          Explore opportunities
+          <span>→</span>
+        </button>
+      </section>
+
+      <footer className="footer">
+        <div className="footer-brand">
+          <div className="brand-symbol small">
+            <span>N</span>
+          </div>
+          <strong>NEXUS</strong>
+        </div>
+
+        <p>Connect. Create. Achieve.</p>
+      </footer>
     </main>
   );
-      }
+}
