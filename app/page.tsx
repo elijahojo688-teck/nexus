@@ -108,8 +108,7 @@ export default function Home() {
     setSearchMessage(getSearchMessage(selected));
   };
 
-  return (
-    <main className="nexus-page">
+  <main className="nexus-page" style={{ background: "red", color: "white", minHeight: "100vh" }}>
       <div className="background-grid" />
       <div className="background-orb orb-one" />
       <div className="background-orb orb-two" />
