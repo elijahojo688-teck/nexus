@@ -183,10 +183,53 @@ export default function Home() {
         </div>
 
         {searchMessage && (
-          <div className="search-message">
-            {searchMessage}
-          </div>
-        )}
+  <section className="search-results">
+    <div className="search-results-header">
+      <div>
+        <div className="section-label">NEXUS SEARCH</div>
+        <h2>Results for "{search}"</h2>
+      </div>
+    </div>
+
+    <div className="results-grid">
+      <article className="result-card">
+        <span>PEOPLE</span>
+        <h3>Find the right person</h3>
+        <p>
+          Discover people, creators and professionals who can help with your request.
+        </p>
+        <button>Explore people →</button>
+      </article>
+
+      <article className="result-card">
+        <span>PRODUCTS</span>
+        <h3>Find what you need</h3>
+        <p>
+          Explore products and items available from people and businesses.
+        </p>
+        <button>Explore products →</button>
+      </article>
+
+      <article className="result-card">
+        <span>SERVICES</span>
+        <h3>Get something done</h3>
+        <p>
+          Find services from people and businesses that match your request.
+        </p>
+        <button>Explore services →</button>
+      </article>
+
+      <article className="result-card">
+        <span>OPPORTUNITIES</span>
+        <h3>Discover possibilities</h3>
+        <p>
+          Find jobs, projects, collaborations and other opportunities.
+        </p>
+        <button>Explore opportunities →</button>
+      </article>
+    </div>
+  </section>
+)}
 
         <div className="try-row">
           <span>Try:</span>
