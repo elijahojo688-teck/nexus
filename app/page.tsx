@@ -36,12 +36,76 @@ const areas = [
   },
 ];
 
+function getSearchMessage(query: string) {
+  const text = query.toLowerCase();
+
+  if (
+    text.includes("buy") ||
+    text.includes("sell") ||
+    text.includes("keyboard") ||
+    text.includes("laptop") ||
+    text.includes("phone") ||
+    text.includes("product")
+  ) {
+    return "NEXUS is looking for products and marketplace results.";
+  }
+
+  if (
+    text.includes("designer") ||
+    text.includes("photographer") ||
+    text.includes("developer") ||
+    text.includes("drummer") ||
+    text.includes("talent") ||
+    text.includes("someone")
+  ) {
+    return "NEXUS is looking for people and services that match your request.";
+  }
+
+  if (
+    text.includes("job") ||
+    text.includes("opportunity") ||
+    text.includes("project") ||
+    text.includes("collaboration")
+  ) {
+    return "NEXUS is looking for opportunities that match your request.";
+  }
+
+  if (
+    text.includes("logo") ||
+    text.includes("flyer") ||
+    text.includes("website") ||
+    text.includes("create")
+  ) {
+    return "NEXUS is looking for people, tools and services that can help you create it.";
+  }
+
+  return "NEXUS understands your request and is preparing relevant results.";
+}
+
 export default function Home() {
   const [search, setSearch] = useState("");
   const [suggestion, setSuggestion] = useState(0);
+  const [searchMessage, setSearchMessage] = useState("");
 
   const nextSuggestion = () => {
     setSuggestion((current) => (current + 1) % suggestions.length);
+  };
+
+  const runSearch = () => {
+    const query = search.trim();
+
+    if (!query) {
+      setSearchMessage("Tell NEXUS what you're trying to find.");
+      return;
+    }
+
+    setSearchMessage(getSearchMessage(query));
+  };
+
+  const useSuggestion = () => {
+    const selected = suggestions[suggestion];
+    setSearch(selected);
+    setSearchMessage(getSearchMessage(selected));
   };
 
   return (
@@ -58,7 +122,9 @@ export default function Home() {
 
           <div>
             <div className="brand-name">NEXUS</div>
-            <div className="brand-tagline">Connect. Create. Achieve.</div>
+            <div className="brand-tagline">
+              Connect. Create. Achieve.
+            </div>
           </div>
         </div>
 
@@ -69,7 +135,9 @@ export default function Home() {
           <a href="#marketplace">Market</a>
         </nav>
 
-        <button className="signin-button">Sign in</button>
+        <button className="signin-button">
+          Sign in
+        </button>
       </header>
 
       <section className="hero" id="home">
@@ -93,20 +161,46 @@ export default function Home() {
 
           <input
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setSearchMessage("");
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                runSearch();
+              }
+            }}
             placeholder={suggestions[suggestion]}
             aria-label="Search NEXUS"
           />
 
-          <button className="search-button">
+          <button
+            className="search-button"
+            onClick={runSearch}
+          >
             Search
           </button>
         </div>
 
+        {searchMessage && (
+          <div className="search-message">
+            {searchMessage}
+          </div>
+        )}
+
         <div className="try-row">
           <span>Try:</span>
-          <button onClick={nextSuggestion}>
+
+          <button onClick={useSuggestion}>
             {suggestions[suggestion]}
+          </button>
+
+          <button
+            className="try-next"
+            onClick={nextSuggestion}
+            aria-label="Next suggestion"
+          >
+            ↻
           </button>
         </div>
 
@@ -116,17 +210,38 @@ export default function Home() {
             Create
           </button>
 
-          <button>
+          <button onClick={() => {
+            document
+              .querySelector(".search-container input")
+              ?.scrollIntoView({ behavior: "smooth" });
+
+            document
+              .querySelector(".search-container input")
+              ?.focus();
+          }}>
             <span>⌕</span>
             Find
           </button>
 
-          <button>
+          <button
+            onClick={() => {
+              setSearch("Help me with something");
+              setSearchMessage(
+                "VERA will become your intelligent guide inside NEXUS."
+              );
+            }}
+          >
             <span>✦</span>
             Ask VERA
           </button>
 
-          <button>
+          <button
+            onClick={() => {
+              document
+                .querySelector("#explore")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
             <span>↗</span>
             Explore
           </button>
@@ -140,16 +255,28 @@ export default function Home() {
             <h2>One place. Many possibilities.</h2>
           </div>
 
-          <button className="view-button">Explore all →</button>
+          <button className="view-button">
+            Explore all →
+          </button>
         </div>
 
         <div className="area-grid">
           {areas.map((area) => (
-            <article className="area-card" key={area.title}>
-              <div className="area-icon">{area.icon}</div>
+            <article
+              className="area-card"
+              key={area.title}
+            >
+              <div className="area-icon">
+                {area.icon}
+              </div>
+
               <h3>{area.title}</h3>
+
               <p>{area.text}</p>
-              <button>Discover →</button>
+
+              <button>
+                Discover →
+              </button>
             </article>
           ))}
         </div>
@@ -163,67 +290,124 @@ export default function Home() {
         </div>
 
         <div className="vera-content">
-          <div className="section-label">VERA</div>
+          <div className="section-label">
+            VERA
+          </div>
 
-          <h2>Your intelligent guide inside NEXUS.</h2>
+          <h2>
+            Your intelligent guide inside NEXUS.
+          </h2>
 
           <p>
-            Tell VERA what you're trying to accomplish and get help finding
-            the right people, products, services, opportunities and tools.
+            Tell VERA what you're trying to accomplish and
+            get help finding the right people, products,
+            services, opportunities and tools.
           </p>
 
-          <button className="primary-button">
+          <button
+            className="primary-button"
+            onClick={() => {
+              setSearch("Help me accomplish something");
+              setSearchMessage(
+                "VERA will help guide you through NEXUS."
+              );
+
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              });
+            }}
+          >
             Ask VERA
             <span>→</span>
           </button>
         </div>
       </section>
 
-      <section className="section" id="marketplace">
+      <section
+        className="section"
+        id="marketplace"
+      >
         <div className="section-heading">
           <div>
-            <div className="section-label">NEXUS MARKET</div>
-            <h2>Discover what the world has to offer.</h2>
+            <div className="section-label">
+              NEXUS MARKET
+            </div>
+
+            <h2>
+              Discover what the world has to offer.
+            </h2>
           </div>
         </div>
 
         <div className="market-grid">
           <article className="market-card large">
-            <div className="market-number">01</div>
+            <div className="market-number">
+              01
+            </div>
+
             <h3>Products</h3>
+
             <p>
-              Find physical and digital products from people and businesses.
+              Find physical and digital products
+              from people and businesses.
             </p>
-            <button>Explore products →</button>
+
+            <button>
+              Explore products →
+            </button>
           </article>
 
           <article className="market-card">
-            <div className="market-number">02</div>
+            <div className="market-number">
+              02
+            </div>
+
             <h3>Services</h3>
+
             <p>
               Find people and businesses ready to help.
             </p>
-            <button>Find services →</button>
+
+            <button>
+              Find services →
+            </button>
           </article>
 
           <article className="market-card">
-            <div className="market-number">03</div>
+            <div className="market-number">
+              03
+            </div>
+
             <h3>Businesses</h3>
+
             <p>
               Discover businesses, brands and organizations.
             </p>
-            <button>Discover businesses →</button>
+
+            <button>
+              Discover businesses →
+            </button>
           </article>
         </div>
       </section>
 
-      <section className="continue-section" id="opportunities">
+      <section
+        className="continue-section"
+        id="opportunities"
+      >
         <div>
-          <div className="section-label">KEEP MOVING</div>
-          <h2>Your next opportunity could be here.</h2>
+          <div className="section-label">
+            KEEP MOVING
+          </div>
+
+          <h2>
+            Your next opportunity could be here.
+          </h2>
+
           <p>
-            Discover projects, collaborations, jobs and possibilities that
-            match what you're looking for.
+            Discover projects, collaborations, jobs and
+            possibilities that match what you're looking for.
           </p>
         </div>
 
@@ -238,10 +422,13 @@ export default function Home() {
           <div className="brand-symbol small">
             <span>N</span>
           </div>
+
           <strong>NEXUS</strong>
         </div>
 
-        <p>Connect. Create. Achieve.</p>
+        <p>
+          Connect. Create. Achieve.
+        </p>
       </footer>
     </main>
   );
