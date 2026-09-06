@@ -212,6 +212,55 @@ setSearchCategory(match?.category ?? "DISCOVER");
 
         {searchMessage && (
   <section className="search-results">
+  <div className="search-results-header">
+    <div>
+      <div className="section-label">NEXUS SEARCH</div>
+      <h2>
+        {search
+          ? `Results for "${search}"`
+          : "What are you looking for?"}
+      </h2>
+    </div>
+  </div>
+
+  <div className="results-grid">
+    {(searchCategory === "PRODUCTS" ||
+      searchCategory === "DISCOVER") && (
+      <article className="result-card">
+        <span>PRODUCTS</span>
+        <h3>Find what you need</h3>
+        <p>
+          Explore products available from people and businesses.
+        </p>
+        <button>Explore products →</button>
+      </article>
+    )}
+
+    {(searchCategory === "PEOPLE & SERVICES" ||
+      searchCategory === "DISCOVER") && (
+      <article className="result-card">
+        <span>PEOPLE & SERVICES</span>
+        <h3>Find the right person</h3>
+        <p>
+          Discover people and services that can help with your request.
+        </p>
+        <button>Explore people →</button>
+      </article>
+    )}
+
+    {(searchCategory === "OPPORTUNITIES" ||
+      searchCategory === "DISCOVER") && (
+      <article className="result-card">
+        <span>OPPORTUNITIES</span>
+        <h3>Discover possibilities</h3>
+        <p>
+          Find jobs, projects and collaborations that match your request.
+        </p>
+        <button>Explore opportunities →</button>
+      </article>
+    )}
+  </div>
+</section>
     <div className="search-results-header">
       <div>
         <div className="section-label">NEXUS SEARCH</div>
