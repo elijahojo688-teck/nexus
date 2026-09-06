@@ -1,4 +1,4 @@
-but"use client";
+"use client";
 
 import { useState } from "react";
 
@@ -21,18 +21,32 @@ const searchCategories = [
     text: "Explore products available from people and businesses.",
   },
   {
-    keywords: ["designer", "photographer", "developer", "drummer", "logo"],
+    keywords: [
+      "designer",
+      "photographer",
+      "developer",
+      "drummer",
+      "talent",
+      "someone",
+      "logo",
+    ],
     category: "PEOPLE & SERVICES",
     title: "Find the right person",
     text: "Discover people and services that can help with your request.",
   },
   {
-    keywords: ["job", "opportunity", "project", "collaboration"],
+    keywords: [
+      "job",
+      "opportunity",
+      "project",
+      "collaboration",
+    ],
     category: "OPPORTUNITIES",
     title: "Discover possibilities",
     text: "Find jobs, projects and collaborations that match your request.",
   },
 ];
+
 const areas = [
   {
     icon: "⌕",
@@ -114,30 +128,40 @@ export default function Home() {
 
   const runSearch = () => {
     const query = search.trim();
-    const match = searchCategories.find((item) =>
-  item.keywords.some((keyword) =>
-    query.toLowerCase().includes(keyword)
-  )
-);
-
-setSearchCategory(match?.category ?? "DISCOVER");
 
     if (!query) {
       setSearchMessage("Tell NEXUS what you're trying to find.");
+      setSearchCategory("DISCOVER");
       return;
     }
 
+    const match = searchCategories.find((item) =>
+      item.keywords.some((keyword) =>
+        query.toLowerCase().includes(keyword)
+      )
+    );
+
+    setSearchCategory(match?.category ?? "DISCOVER");
     setSearchMessage(getSearchMessage(query));
   };
 
   const useSuggestion = () => {
     const selected = suggestions[suggestion];
+
     setSearch(selected);
+
+    const match = searchCategories.find((item) =>
+      item.keywords.some((keyword) =>
+        selected.toLowerCase().includes(keyword)
+      )
+    );
+
+    setSearchCategory(match?.category ?? "DISCOVER");
     setSearchMessage(getSearchMessage(selected));
   };
 
-  <return (
-    <main className="nexus-page">      
+  return (
+    <main className="nexus-page">
       <div className="background-grid" />
       <div className="background-orb orb-one" />
       <div className="background-orb orb-two" />
@@ -150,6 +174,7 @@ setSearchCategory(match?.category ?? "DISCOVER");
 
           <div>
             <div className="brand-name">NEXUS</div>
+
             <div className="brand-tagline">
               Connect. Create. Achieve.
             </div>
@@ -180,8 +205,8 @@ setSearchCategory(match?.category ?? "DISCOVER");
         </h1>
 
         <p className="hero-text">
-          Find people, products, services, opportunities, businesses,
-          creators and more — all in one place.
+          Find people, products, services, opportunities,
+          businesses, creators and more — all in one place.
         </p>
 
         <div className="search-container">
@@ -211,102 +236,82 @@ setSearchCategory(match?.category ?? "DISCOVER");
         </div>
 
         {searchMessage && (
-  <section className="search-results">
-  <div className="search-results-header">
-    <div>
-      <div className="section-label">NEXUS SEARCH</div>
-      <h2>
-        {search
-          ? `Results for "${search}"`
-          : "What are you looking for?"}
-      </h2>
-    </div>
-  </div>
+          <div className="search-message">
+            {searchMessage}
+          </div>
+        )}
 
-  <div className="results-grid">
-    {(searchCategory === "PRODUCTS" ||
-      searchCategory === "DISCOVER") && (
-      <article className="result-card">
-        <span>PRODUCTS</span>
-        <h3>Find what you need</h3>
-        <p>
-          Explore products available from people and businesses.
-        </p>
-        <button>Explore products →</button>
-      </article>
-    )}
+        {searchMessage && (
+          <section className="search-results">
+            <div className="search-results-header">
+              <div>
+                <div className="section-label">
+                  NEXUS SEARCH
+                </div>
 
-    {(searchCategory === "PEOPLE & SERVICES" ||
-      searchCategory === "DISCOVER") && (
-      <article className="result-card">
-        <span>PEOPLE & SERVICES</span>
-        <h3>Find the right person</h3>
-        <p>
-          Discover people and services that can help with your request.
-        </p>
-        <button>Explore people →</button>
-      </article>
-    )}
+                <h2>
+                  Results for "{search}"
+                </h2>
+              </div>
+            </div>
 
-    {(searchCategory === "OPPORTUNITIES" ||
-      searchCategory === "DISCOVER") && (
-      <article className="result-card">
-        <span>OPPORTUNITIES</span>
-        <h3>Discover possibilities</h3>
-        <p>
-          Find jobs, projects and collaborations that match your request.
-        </p>
-        <button>Explore opportunities →</button>
-      </article>
-    )}
-  </div>
-</section>
-    <div className="search-results-header">
-      <div>
-        <div className="section-label">NEXUS SEARCH</div>
-        <h2>Results for "{search}"</h2>
-      </div>
-    </div>
+            <div className="results-grid">
+              {(searchCategory === "PRODUCTS" ||
+                searchCategory === "DISCOVER") && (
+                <article className="result-card">
+                  <span>PRODUCTS</span>
 
-    <div className="results-grid">
-      <article className="result-card">
-        <span>PEOPLE</span>
-        <h3>Find the right person</h3>
-        <p>
-          Discover people, creators and professionals who can help with your request.
-        </p>
-        <button>Explore people →</button>
-      </article>
+                  <h3>Find what you need</h3>
 
-      <article className="result-card">
-        <span>PRODUCTS</span>
-        <h3>Find what you need</h3>
-        <p>
-          Explore products and items available from people and businesses.
-        </p>
-        <button>Explore products →</button>
-      </article>
+                  <p>
+                    Explore products available from people
+                    and businesses.
+                  </p>
 
-      <article className="result-card">
-        <span>SERVICES</span>
-        <h3>Get something done</h3>
-        <p>
-          Find services from people and businesses that match your request.
-        </p>
-        <button>Explore services →</button>
-      </article>
+                  <button>
+                    Explore products →
+                  </button>
+                </article>
+              )}
 
-      <article className="result-card">
-        <span>OPPORTUNITIES</span>
-        <h3>Discover possibilities</h3>
-        <p>
-          Find jobs, projects, collaborations and other opportunities.
-        </p>
-        <button>Explore opportunities →</button>
-      </article>
-    </div>
-  </section>
-)}
+              {(searchCategory === "PEOPLE & SERVICES" ||
+                searchCategory === "DISCOVER") && (
+                <article className="result-card">
+                  <span>PEOPLE & SERVICES</span>
+
+                  <h3>Find the right person</h3>
+
+                  <p>
+                    Discover people and services that can
+                    help with your request.
+                  </p>
+
+                  <button>
+                    Explore people →
+                  </button>
+                </article>
+              )}
+
+              {(searchCategory === "OPPORTUNITIES" ||
+                searchCategory === "DISCOVER") && (
+                <article className="result-card">
+                  <span>OPPORTUNITIES</span>
+
+                  <h3>Discover possibilities</h3>
+
+                  <p>
+                    Find jobs, projects and collaborations
+                    that match your request.
+                  </p>
+
+                  <button>
+                    Explore opportunities →
+                  </button>
+                </article>
+              )}
+            </div>
+          </section>
+        )}
 
         <div className="try-row">
           <span>Try:</span>
@@ -330,15 +335,19 @@ setSearchCategory(match?.category ?? "DISCOVER");
             Create
           </button>
 
-          <button onClick={() => {
-            document
-              .querySelector(".search-container input")
-              ?.scrollIntoView({ behavior: "smooth" });
+          <button
+            onClick={() => {
+              document
+                .querySelector(".search-container input")
+                ?.scrollIntoView({
+                  behavior: "smooth",
+                });
 
-            document
-              .querySelector(".search-container input")
-              ?.focus();
-          }}>
+              document
+                .querySelector(".search-container input")
+                ?.focus();
+            }}
+          >
             <span>⌕</span>
             Find
           </button>
@@ -346,6 +355,9 @@ setSearchCategory(match?.category ?? "DISCOVER");
           <button
             onClick={() => {
               setSearch("Help me with something");
+
+              setSearchCategory("DISCOVER");
+
               setSearchMessage(
                 "VERA will become your intelligent guide inside NEXUS."
               );
@@ -359,7 +371,9 @@ setSearchCategory(match?.category ?? "DISCOVER");
             onClick={() => {
               document
                 .querySelector("#explore")
-                ?.scrollIntoView({ behavior: "smooth" });
+                ?.scrollIntoView({
+                  behavior: "smooth",
+                });
             }}
           >
             <span>↗</span>
@@ -371,8 +385,13 @@ setSearchCategory(match?.category ?? "DISCOVER");
       <section className="section" id="explore">
         <div className="section-heading">
           <div>
-            <div className="section-label">DISCOVER</div>
-            <h2>One place. Many possibilities.</h2>
+            <div className="section-label">
+              DISCOVER
+            </div>
+
+            <h2>
+              One place. Many possibilities.
+            </h2>
           </div>
 
           <button className="view-button">
@@ -419,15 +438,20 @@ setSearchCategory(match?.category ?? "DISCOVER");
           </h2>
 
           <p>
-            Tell VERA what you're trying to accomplish and
-            get help finding the right people, products,
-            services, opportunities and tools.
+            Tell VERA what you're trying to accomplish
+            and get help finding the right people,
+            products, services, opportunities and tools.
           </p>
 
           <button
             className="primary-button"
             onClick={() => {
-              setSearch("Help me accomplish something");
+              setSearch(
+                "Help me accomplish something"
+              );
+
+              setSearchCategory("DISCOVER");
+
               setSearchMessage(
                 "VERA will help guide you through NEXUS."
               );
@@ -469,8 +493,8 @@ setSearchCategory(match?.category ?? "DISCOVER");
             <h3>Products</h3>
 
             <p>
-              Find physical and digital products
-              from people and businesses.
+              Find physical and digital products from
+              people and businesses.
             </p>
 
             <button>
@@ -552,4 +576,4 @@ setSearchCategory(match?.category ?? "DISCOVER");
       </footer>
     </main>
   );
-}
+  }
